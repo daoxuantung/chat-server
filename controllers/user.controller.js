@@ -5,16 +5,6 @@ var jwt = require('jsonwebtoken');
 module.exports.register = async (req, res) => {
     const { name, email, password } = req.body;
 
-    const emailRegex = /@gmail.com|@yahoo.com|@hotmail.com|@live.com/;
-
-    if (!emailRegex.test(email)) throw 'Email is not supported.';
-
-    if (password.length < 6) throw 'Password must be atleast 6 characters long.';
-
-    const userExists = await User.findOne({ email });
-
-    if (userExists) throw 'Email already exists.';
-
     const user = new User({
         name,
         email,
@@ -24,8 +14,28 @@ module.exports.register = async (req, res) => {
     await user.save();
 
     res.json({
-        message: "User [" + name + "] registered successfully!",
+        message: "Success!",
     });
+}
+
+
+module.exports.validEmail = async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (user) return res.json({ msg: "Username already been taken" });
+
+    const emailRegex = /@gmail.com|@yahoo.com|@hotmail.com|@live.com/;
+
+    if (!emailRegex.test(email)) return res.json({ msg: 'Email is not supported domain name.' });
+
+    return res.json({ msg: "Username available." })
+}
+
+module.exports.validPassword = (req, res) => {
+    const { password } = req.body;
+    if (password && password.length < 6) return res.json({ msg: 'Password must be atleast 6 characters long.' });
+
+    return res.json({ msg: "Password available." })
 }
 
 module.exports.login = async (req, res) => {

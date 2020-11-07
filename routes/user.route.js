@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const controller = require('../controllers/user.controller');
+const validate = require('../validates/user.validate');
 
-router.post('/register', controller.register);
+router.post('/register', validate.validRegister, controller.register);
 
-router.post('/login', controller.login);
+router.post('/login', validate.validLogin, controller.login);
 
-router.post('/validEmail', controller.validEmail)
-
-router.post('/validPassword', controller.validPassword)
+router.post('/:token', controller.getUser);
 
 module.exports = router;

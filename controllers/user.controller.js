@@ -9,6 +9,7 @@ module.exports.register = async (req, res) => {
         username,
         name: username,
         email,
+        avatarUrl: 'https://res.cloudinary.com/lepis/image/upload/v1604833803/avatar.svg',
         password: bcrypt.hashSync(password, 10),
     });
 
@@ -32,18 +33,11 @@ module.exports.login = async (req, res) => {
     });
 }
 
+module.exports.index = async (req, res) => {
+    const id = res.locals.id;
+
+    const user = await User.findOne({ _id: id });
 
 
-module.exports.getUser = async (req, res) => {
-    const { token } = req.params;
-
-    var decoded = jwt.verify(token, process.env.SECRET_KEY);
-
-    if (!decoded.id) res.json({ error: 'Email does not exist' });
-
-    const user = await User.findOne({ _id: decoded.id });
-
-    const { name, email } = user;
-
-    res.json({ user: { name, email } });
+    res.json({ user });
 }

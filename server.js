@@ -24,6 +24,7 @@ mongoose.connection.once('open', () => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/static', express.static('public'))
 
 app.use('/user', userRouter);
 

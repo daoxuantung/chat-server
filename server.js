@@ -58,5 +58,9 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("Disconnected: " + socket.userId);
     });
+
+    socket.on("send", (data) => {
+        socket.emit('message', data);
+    });
 });
 

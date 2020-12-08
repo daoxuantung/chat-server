@@ -143,6 +143,7 @@ module.exports.acceptRequest = async (req, res) => {
     const id = res.locals.id;
 
     const currentUser = await User.findById(id);
+    console.log(user.username, currentUser.username)
 
     async.parallel({
         one: (callback) => {
@@ -257,4 +258,17 @@ module.exports.removeRequest = async (req, res) => {
         }
     }, (err, results) => {
     });
+}
+
+module.exports.getFriend = async (req, res) => {
+    const datas = req.body.user.friendsList;
+    const listFriends = []
+
+    for (let data of datas) {
+        const user = await User.findById({ _id: data.friendId })
+        listFriends.push(user);
+    }
+
+
+    res.json(listFriends);
 }

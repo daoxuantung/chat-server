@@ -19,4 +19,6 @@ router.post('/accept', auth, controller.acceptRequest);
 
 router.post('/remove', auth, controller.removeRequest);
 
+router.post('/friends', auth, controller.getFriend);
+
 module.exports = router;

@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
     totalRequest: {
         type: Number,
         default: 0
-    }
+    },
 });
 
 mongoose.set('useFindAndModify', false);

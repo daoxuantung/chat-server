@@ -5,9 +5,13 @@ const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
+    work: {
+        type: String,
+        default: ''
+    },
     avatarUrl: {
         type: String,
-        default: 'https://res.cloudinary.com/lepis/image/upload/v1604833803/avatar.svg'
+        default: 'https://res.cloudinary.com/lepis/image/upload/v1608547701/avatar.svg'
     },
     aboutMe: {
         type: String,
@@ -32,7 +36,15 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'User'
         },
+        name: {
+            type: String,
+            default: ''
+        },
         username: {
+            type: String,
+            default: ''
+        },
+        avatarUrl: {
             type: String,
             default: ''
         }
